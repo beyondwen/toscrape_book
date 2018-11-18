@@ -5,15 +5,16 @@ import scrapy
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from scrapy.linkextractors import LinkExtractor
 
 
 class BooksSpider(scrapy.Spider):
     name = 'bookstest'
-    allowed_domains = ['192.168.1.114:8086']
-    start_urls = ['http://192.168.1.114:8086/list']
+    allowed_domains = ['192.168.2.150:8086']
+    start_urls = ['http://192.168.2.150:8086/list']
 
     def parse(self, response):
-        f = open('D:\\pythonwork\\toscrape_book\\jsonFile.json', 'r')
+        f = open('D:\\pythonwork\\fullstack\\toscrape_book\\jsonFile.json', 'r')
         cookiessu = f.read()
         cookiessu = json.loads(cookiessu)
         # 进行循环
@@ -27,9 +28,9 @@ class BooksSpider(scrapy.Spider):
                 # 书名
                 bookname = le.css('.bookName::text')
 
-                # browser = webdriver.Chrome('C:\Program Files (x86)\Google\Chrome Beta\Application\chromedriver.exe')
+                browser = webdriver.Chrome('C:\Program Files (x86)\Google\Chrome Beta\Application\chromedriver.exe')
                 # 打开浏览器
-                browser = webdriver.Chrome()
+                # browser = webdriver.Chrome()
                 # 抽取具体链接
                 url = url1[0].extract()
                 # 抽取具体密码
@@ -39,15 +40,15 @@ class BooksSpider(scrapy.Spider):
 
                 # 请求目标地址
                 browser.get(url)
-                time.sleep(2)
+                time.sleep(1)
                 # 浏览器最大化
                 browser.maximize_window()
-                time.sleep(2)
+                time.sleep(1)
                 if cookiessu != "":
                     for cssu in cookiessu:
                         print(cssu)
                         browser.add_cookie(cssu)
-                    time.sleep(2)
+                    time.sleep(1)
                 else:
                     # 你的百度去帐号，保存到你的网盘肯定需要你自己的帐号密码
                     user_name = 'beyond文豪'
@@ -85,23 +86,23 @@ class BooksSpider(scrapy.Spider):
                 submit_button = browser.find_element(By.CLASS_NAME, "text")
                 # 提交
                 submit_button.click()
-                time.sleep(3)
+                time.sleep(2)
                 # print(getCookie)
                 # 保存到网盘
                 browser.find_element_by_css_selector(".zbyDdwb").click()
                 browser.find_element(By.CLASS_NAME, "x-button-box").find_element_by_xpath('//*[@data-button-id="b1"]').click()
                 time.sleep(3)
                 # 选取保存位置
-                pdf_book = browser.find_element_by_xpath('//*[@node-path="/我的小书屋"]')
-                pdf_book.click()
-                time.sleep(3)
+                browser.find_element_by_xpath('//*[@node-path="/我的小书屋"]').click()
+                time.sleep(2)
                 browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath('//*[@data-button-id="b35"]').click()
                 time.sleep(3)
                 browser.close()
-                # try:
-                #
-                # except:
-                #     print('save faile :' + url)
+            le = LinkExtractor(restrict_css='#pageno')
+            links = le.extract_links(response)
+            if links:
+                next_url = links[0].url
+                yield scrapy.Request(next_url, callback=self.parse,dont_filter=True)
         except:
             print('save faile :' + bookname)
             fileObject = open('faile.txt', 'w')
