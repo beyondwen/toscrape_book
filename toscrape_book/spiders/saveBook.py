@@ -110,7 +110,7 @@ class BooksSpider(scrapy.Spider):
                 book['save_state'] = 1
                 book['id'] = bookId
                 yield book
-            le = LinkExtractor(restrict_css='#pageno')
+            le = LinkExtractor(restrict_css='#shouye')
             links = le.extract_links(response)
             if links:
                 next_url = links[0].url
