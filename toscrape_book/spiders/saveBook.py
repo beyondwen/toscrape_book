@@ -2,6 +2,7 @@ import json
 import time
 
 import scrapy
+from ..items import BookItem
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -10,23 +11,26 @@ from scrapy.linkextractors import LinkExtractor
 
 class BooksSpider(scrapy.Spider):
     name = 'bookstest'
-    allowed_domains = ['192.168.2.150:8086']
-    start_urls = ['http://192.168.2.150:8086/list']
+    allowed_domains = ['192.168.1.114:8086']
+    start_urls = ['http://192.168.1.114:8086/list']
 
     def parse(self, response):
-        f = open('D:\\pythonwork\\fullstack\\toscrape_book\\jsonFile.json', 'r')
+        f = open('D:\\pythonwork\\toscrape_book\\jsonFile.json', 'r')
         cookiessu = f.read()
         cookiessu = json.loads(cookiessu)
         # 进行循环
         try:
             for le in response.css('.booktr'):
+                book = BookItem()
                 # time.sleep(2)
                 # 提取链接
                 url1 = le.css('.bookUrl::text')
                 # 提取密码
                 pwd1 = le.css('.pwd::text')
+                # id
+                bookId1 = le.css('.bookid::text')
                 # 书名
-                bookname = le.css('.bookName::text')
+                bookname1 = le.css('.bookName::text')
 
                 browser = webdriver.Chrome('C:\Program Files (x86)\Google\Chrome Beta\Application\chromedriver.exe')
                 # 打开浏览器
@@ -35,6 +39,8 @@ class BooksSpider(scrapy.Spider):
                 url = url1[0].extract()
                 # 抽取具体密码
                 pwd = pwd1[0].extract()
+                bookId = bookId1[0].extract()
+                bookname = bookname1[0].extract()
                 # url = 'https://pan.baidu.com/s/1_QuWZDoyPmsXNtYsCqqirA'
                 # pwd = 'ci7y'
 
@@ -98,6 +104,12 @@ class BooksSpider(scrapy.Spider):
                 browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath('//*[@data-button-id="b35"]').click()
                 time.sleep(3)
                 browser.close()
+                book['name'] = bookname
+                book['url'] = url
+                book['password'] = pwd
+                book['save_state'] = 1
+                book['id'] = bookId
+                yield book
             le = LinkExtractor(restrict_css='#pageno')
             links = le.extract_links(response)
             if links:

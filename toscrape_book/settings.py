@@ -102,9 +102,9 @@ ROBOTSTXT_OBEY = True
 # MYSQL_PASSWORD = 'wenhao151'
 #
 # 写入数据库时务必要开启此处
-# ITEM_PIPELINES = {
-#     'toscrape_book.pipelines.MySQLPipeline': 401,
-# }
+ITEM_PIPELINES = {
+    'toscrape_book.pipelines.MySQLPipeline': 213,
+}
 
 # # 伪装成常规浏览器
 # USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.53 Safari/537.36'
