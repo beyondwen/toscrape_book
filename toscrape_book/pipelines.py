@@ -30,7 +30,7 @@ class MySQLPipeline:
     #     host = spider.settings.get('MYSQL_HOST', 'localhost')
     #     port = spider.settings.get('MYSQL_PORT', 3306)
     #     user = spider.settings.get('MYSQL_USER', 'root')
-    #     passwd = spider.settings.get('MYSQL_PASSWORD', 'wenhao151')
+    #     passwd = spider.settings.get('MYSQL_PASSWORD', '123456')
     #     self.db_conn = MySQLdb.connect(host=host, port=port, db=db, user=user, passwd=passwd, charset='utf8')
     #     self.db_cur = self.db_conn.cursor()
     #
@@ -47,12 +47,16 @@ class MySQLPipeline:
     #         item['name'],
     #         item['url'],
     #         item['password'],
+    #         item['save_state'],
+    #         item['id']
     #     )
-    #     sql = 'INSERT INTO books(book_name,book_url,book_password) VALUES (%s,%s,%s)'
-    #     self.db_cur.execute(sql, values)
+    #     update_sql = """
+    #          update book set name = %s,url=%s,password =%s,save_state=%s where id = %s
+    #      """
+    #     self.db_cur.execute(update_sql, values)
 
     def __init__(self):
-        self.conn = MySQLdb.connect('localhost', 'root', 'wenhao151', 'scrapy_db', charset='utf8', use_unicode=True)
+        self.conn = MySQLdb.connect('127.0.0.1', 'root', 'wenhao151', 'scrapy_db', charset='utf8', use_unicode=True)
         self.cursor = self.conn.cursor()
 
     def process_item(self, item, spider):

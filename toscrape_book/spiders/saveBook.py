@@ -7,15 +7,16 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from scrapy.linkextractors import LinkExtractor
+from selenium.webdriver.chrome.options import Options
 
 
 class BooksSpider(scrapy.Spider):
     name = 'bookstest'
-    allowed_domains = ['192.168.1.114:8086']
-    start_urls = ['http://192.168.1.114:8086/list']
+    allowed_domains = ['localhost:8086']
+    start_urls = ['http://localhost:8086/list']
 
     def parse(self, response):
-        f = open('D:\\pythonwork\\toscrape_book\\jsonFile.json', 'r')
+        f = open('D:\\pythonwork\\fullstack\\toscrape_book\\jsonFile.json', 'r')
         cookiessu = f.read()
         cookiessu = json.loads(cookiessu)
         # 进行循环
@@ -32,7 +33,14 @@ class BooksSpider(scrapy.Spider):
                 # 书名
                 bookname1 = le.css('.bookName::text')
 
-                browser = webdriver.Chrome('C:\Program Files (x86)\Google\Chrome Beta\Application\chromedriver.exe')
+                chrome_options = Options()
+                chrome_options.add_argument('headless')
+                chrome_options.add_argument("window-size=1920,1080")
+                chrome_options.add_argument('--start-maximized')
+                chrome_options.add_argument('log-level=3')
+                # browser = webdriver.Chrome('C:\Program Files (x86)\Google\Chrome Beta\Application\chromedriver.exe')
+                browser = webdriver.Chrome(chrome_options=chrome_options)
+                print(browser.title)
                 # 打开浏览器
                 # browser = webdriver.Chrome()
                 # 抽取具体链接
@@ -48,7 +56,7 @@ class BooksSpider(scrapy.Spider):
                 browser.get(url)
                 time.sleep(1)
                 # 浏览器最大化
-                browser.maximize_window()
+                # browser.maximize_window()
                 time.sleep(1)
                 if cookiessu != "":
                     for cssu in cookiessu:
@@ -104,6 +112,7 @@ class BooksSpider(scrapy.Spider):
                 browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath('//*[@data-button-id="b35"]').click()
                 time.sleep(3)
                 browser.close()
+                browser.quit()
                 book['name'] = bookname
                 book['url'] = url
                 book['password'] = pwd
