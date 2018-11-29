@@ -65,8 +65,8 @@ class BooksSpider(scrapy.Spider):
                     time.sleep(1)
                 else:
                     # 你的百度去帐号，保存到你的网盘肯定需要你自己的帐号密码
-                    user_name = 'beyond文豪'
-                    password = 'wenhao176'
+                    user_name = ''
+                    password = ''
                     # 登陆自己的百度云
                     browser.find_element(By.CLASS_NAME, "CDaavKb").find_element_by_xpath(
                         '//*[@node-type="header-login-btn"]').click()
