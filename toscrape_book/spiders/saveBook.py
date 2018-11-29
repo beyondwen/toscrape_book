@@ -94,31 +94,32 @@ class BooksSpider(scrapy.Spider):
                 # browser.refresh()
                 # 获取输入分享密码的输入框
                 input_ = browser.find_element(By.CLASS_NAME, "QKKaIE")
-                # 输入分享密码
-                input_.send_keys(pwd, Keys.ARROW_DOWN)
-                # 获取提交按钮
-                submit_button = browser.find_element(By.CLASS_NAME, "text")
-                # 提交
-                submit_button.click()
-                time.sleep(2)
-                # print(getCookie)
-                # 保存到网盘
-                browser.find_element_by_css_selector(".zbyDdwb").click()
-                browser.find_element(By.CLASS_NAME, "x-button-box").find_element_by_xpath('//*[@data-button-id="b1"]').click()
-                time.sleep(3)
-                # 选取保存位置
-                browser.find_element_by_xpath('//*[@node-path="/我的小书屋"]').click()
-                time.sleep(2)
-                browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath('//*[@data-button-id="b35"]').click()
-                time.sleep(3)
-                browser.close()
-                browser.quit()
-                book['name'] = bookname
-                book['url'] = url
-                book['password'] = pwd
-                book['save_state'] = 1
-                book['id'] = bookId
-                yield book
+                if input_ != "":
+                    # 输入分享密码
+                    input_.send_keys(pwd, Keys.ARROW_DOWN)
+                    # 获取提交按钮
+                    submit_button = browser.find_element(By.CLASS_NAME, "text")
+                    # 提交
+                    submit_button.click()
+                    time.sleep(2)
+                    # print(getCookie)
+                    # 保存到网盘
+                    browser.find_element_by_css_selector(".zbyDdwb").click()
+                    browser.find_element(By.CLASS_NAME, "x-button-box").find_element_by_xpath('//*[@data-button-id="b1"]').click()
+                    time.sleep(3)
+                    # 选取保存位置
+                    browser.find_element_by_xpath('//*[@node-path="/我的小书屋"]').click()
+                    time.sleep(2)
+                    browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath('//*[@data-button-id="b35"]').click()
+                    time.sleep(3)
+                    browser.close()
+                    browser.quit()
+                    book['name'] = bookname
+                    book['url'] = url
+                    book['password'] = pwd
+                    book['save_state'] = 1
+                    book['id'] = bookId
+                    yield book
             le = LinkExtractor(restrict_css='#shouye')
             links = le.extract_links(response)
             if links:
