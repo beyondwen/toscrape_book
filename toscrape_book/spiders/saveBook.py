@@ -11,12 +11,12 @@ from selenium.webdriver.chrome.options import Options
 
 
 class BooksSpider(scrapy.Spider):
-    name = 'bookstest'
+    name = 'bookstestcopy1'
     allowed_domains = ['localhost:8086']
     start_urls = ['http://localhost:8086/list']
 
     def parse(self, response):
-        f = open('D:\\pythonwork\\fullstack\\toscrape_book\\jsonFile.json', 'r')
+        f = open('D:\\pythonwork\\fullstack\\toscrape_book1\\jsonFile.json', 'r')
         cookiessu = f.read()
         cookiessu = json.loads(cookiessu)
         # 进行循环
@@ -34,10 +34,10 @@ class BooksSpider(scrapy.Spider):
                 bookname1 = le.css('.bookName::text')
 
                 chrome_options = Options()
-                chrome_options.add_argument('headless')
-                chrome_options.add_argument("window-size=1920,1080")
+                chrome_options.add_argument('--headless')
+                # chrome_options.add_argument("window-size=1920,1080")
                 chrome_options.add_argument('--start-maximized')
-                chrome_options.add_argument('log-level=3')
+                chrome_options.add_argument('--log-level=3')
                 # browser = webdriver.Chrome('C:\Program Files (x86)\Google\Chrome Beta\Application\chromedriver.exe')
                 browser = webdriver.Chrome(chrome_options=chrome_options)
                 print(browser.title)
@@ -56,7 +56,7 @@ class BooksSpider(scrapy.Spider):
                 browser.get(url)
                 time.sleep(1)
                 # 浏览器最大化
-                # browser.maximize_window()
+                browser.maximize_window()
                 time.sleep(1)
                 if cookiessu != "":
                     for cssu in cookiessu:
@@ -65,8 +65,8 @@ class BooksSpider(scrapy.Spider):
                     time.sleep(1)
                 else:
                     # 你的百度去帐号，保存到你的网盘肯定需要你自己的帐号密码
-                    user_name = 'beyond文豪'
-                    password = 'wenhao176'
+                    user_name = ''
+                    password = ''
                     # 登陆自己的百度云
                     browser.find_element(By.CLASS_NAME, "CDaavKb").find_element_by_xpath(
                         '//*[@node-type="header-login-btn"]').click()
@@ -93,24 +93,26 @@ class BooksSpider(scrapy.Spider):
                     time.sleep(20)
                 # browser.refresh()
                 # 获取输入分享密码的输入框
+                input_ = None
                 input_ = browser.find_element(By.CLASS_NAME, "QKKaIE")
-                # 输入分享密码
-                input_.send_keys(pwd, Keys.ARROW_DOWN)
-                # 获取提交按钮
-                submit_button = browser.find_element(By.CLASS_NAME, "text")
-                # 提交
-                submit_button.click()
-                time.sleep(2)
-                # print(getCookie)
-                # 保存到网盘
-                browser.find_element_by_css_selector(".zbyDdwb").click()
-                browser.find_element(By.CLASS_NAME, "x-button-box").find_element_by_xpath('//*[@data-button-id="b1"]').click()
-                time.sleep(3)
-                # 选取保存位置
-                browser.find_element_by_xpath('//*[@node-path="/我的小书屋"]').click()
-                time.sleep(2)
-                browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath('//*[@data-button-id="b35"]').click()
-                time.sleep(3)
+                if input_ != None:
+                    # 输入分享密码
+                    input_.send_keys(pwd, Keys.ARROW_DOWN)
+                    # 获取提交按钮
+                    submit_button = browser.find_element(By.CLASS_NAME, "text")
+                    # 提交
+                    submit_button.click()
+                    time.sleep(2)
+                    # print(getCookie)
+                    # 保存到网盘
+                    browser.find_element_by_css_selector(".zbyDdwb").click()
+                    browser.find_element(By.CLASS_NAME, "x-button-box").find_element_by_xpath('//*[@data-button-id="b1"]').click()
+                    time.sleep(3)
+                    # 选取保存位置
+                    browser.find_element_by_xpath('//*[@node-path="/我的小书屋"]').click()
+                    time.sleep(2)
+                    browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath('//*[@data-button-id="b35"]').click()
+                    time.sleep(3)
                 browser.close()
                 browser.quit()
                 book['name'] = bookname
@@ -119,7 +121,7 @@ class BooksSpider(scrapy.Spider):
                 book['save_state'] = 1
                 book['id'] = bookId
                 yield book
-            le = LinkExtractor(restrict_css='#shouye')
+            le = LinkExtractor(restrict_css='#pageno')
             links = le.extract_links(response)
             if links:
                 next_url = links[0].url
