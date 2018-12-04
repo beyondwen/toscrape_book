@@ -11,11 +11,9 @@ from selenium.webdriver.chrome.options import Options
 
 
 class BooksSpider(scrapy.Spider):
-    name = 'save2'
+    name = 'save1'
     allowed_domains = ['localhost:8086']
     start_urls = ['http://localhost:8086/list']
-
-    browser = None
 
     def parse(self, response):
         f = open('D:\\pythonwork\\fullstack\\toscrape_book\\jsonFile.json', 'r')
@@ -35,12 +33,13 @@ class BooksSpider(scrapy.Spider):
             bookname1 = le.css('.bookName::text')
 
             chrome_options = Options()
-            chrome_options.add_argument('headless')
+            # chrome_options.add_argument('headless')
             # chrome_options.add_argument("window-size=1920,1080")
             chrome_options.add_argument('--start-maximized')
             chrome_options.add_argument('log-level=3')
             # browser = webdriver.Chrome('C:\Program Files (x86)\Google\Chrome Beta\Application\chromedriver.exe')
-            self.browser = webdriver.Chrome(chrome_options=chrome_options)
+            browser = webdriver.Chrome(chrome_options=chrome_options)
+            print(browser.title)
             # 打开浏览器
             # browser = webdriver.Chrome()
             # 抽取具体链接
@@ -53,7 +52,7 @@ class BooksSpider(scrapy.Spider):
             # pwd = 'ci7y'
 
             # 请求目标地址
-            self.browser.get(url)
+            browser.get(url)
             time.sleep(1)
             # 浏览器最大化
             # browser.maximize_window()
@@ -61,25 +60,59 @@ class BooksSpider(scrapy.Spider):
             if cookiessu != "":
                 for cssu in cookiessu:
                     print(cssu)
-                    self.browser.add_cookie(cssu)
+                    browser.add_cookie(cssu)
                 time.sleep(1)
+            else:
+                # 你的百度去帐号，保存到你的网盘肯定需要你自己的帐号密码
+                user_name = ''
+                password = ''
+                # 登陆自己的百度云
+                browser.find_element(By.CLASS_NAME, "CDaavKb").find_element_by_xpath(
+                    '//*[@node-type="header-login-btn"]').click()
+                time.sleep(4)
+                browser.find_element(By.CLASS_NAME, "tang-pass-footerBarULogin").click()
+
+                # 输入用户名密码
+                time.sleep(5)
+                user_name_input = browser.find_element(By.ID, "TANGRAM__PSP_10__userName")
+                pwd_input = browser.find_element(By.ID, "TANGRAM__PSP_10__password")
+                user_name_input.send_keys(user_name, Keys.ARROW_DOWN)
+                pwd_input.send_keys(password, Keys.ARROW_DOWN)
+
+                # 点击登陆
+                browser.find_element(By.ID, "TANGRAM__PSP_10__submit").click()
+                time.sleep(10)
+                cookies = browser.get_cookies()
+                print(cookies)
+                jsObj = json.dumps(cookies)
+
+                fileObject = open('jsonFile.json', 'w')
+                fileObject.write(jsObj)
+                fileObject.close()
+                time.sleep(20)
+            # browser.refresh()
+            input_ = None
             # 获取输入分享密码的输入框
             try:
-                input_ = self.browser.find_element(By.CLASS_NAME, "QKKaIE")
+                input_ = browser.find_element(By.CLASS_NAME, "QKKaIE")
                 # 输入分享密码
                 input_.send_keys(pwd, Keys.ARROW_DOWN)
                 # 获取提交按钮
-                submit_button = self.browser.find_element(By.CLASS_NAME, "text")
+                submit_button = browser.find_element(By.CLASS_NAME, "text")
                 # 提交
                 submit_button.click()
                 time.sleep(2)
                 # print(getCookie)
                 # 保存到网盘
-                self.clickSave()
+
+                browser.find_element_by_css_selector(".zbyDdwb").click()
+                browser.find_element(By.CLASS_NAME, "x-button-box").find_element_by_xpath('//*[@data-button-id="b1"]').click()
+                time.sleep(3)
                 # 选取保存位置
-                self.browser.find_element_by_xpath('//*[@node-path="/我的小书屋"]').click()
+                browser.find_element_by_xpath('//*[@node-path="/我的小书屋"]').click()
                 time.sleep(2)
-                self.finalSave()
+                browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath('//*[@data-button-id="b35"]').click()
+                time.sleep(3)
                 book['name'] = bookname
                 book['url'] = url
                 book['password'] = pwd
@@ -90,28 +123,20 @@ class BooksSpider(scrapy.Spider):
                 book['save_state'] = 3
                 print('保存失败')
                 print('save faile :' + bookname)
-            self.browser.close()
-            self.browser.quit()
+                # fileObject = open('faile.txt', 'a',encoding='utf8')
+                # fileObject.write(bookname)
+                # fileObject.close()
+            browser.close()
+            browser.quit()
             yield book
         le = LinkExtractor(restrict_css='#weiye')
         links = le.extract_links(response)
         if links:
             next_url = links[0].url
             yield scrapy.Request(next_url, callback=self.parse, dont_filter=True)
-
-    def clickSave(self):
-        try:
-            self.browser.find_element_by_css_selector(".zbyDdwb").click()
-            self.browser.find_element(By.CLASS_NAME, "x-button-box").find_element_by_xpath('//*[@data-button-id="b1"]').click()
-            time.sleep(3)
-        except:
-            self.browser.find_element(By.CLASS_NAME, "x-button-box").find_element_by_xpath('//*[@data-button-id="b1"]').click()
-            time.sleep(3)
-
-    def finalSave(self):
-        try:
-            self.browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath('//*[@data-button-id="b35"]').click()
-            time.sleep(3)
-        except:
-            self.browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath('//*[@data-button-id="b13"]').click()
-            time.sleep(3)
+    # try:
+    # except:
+    #     print('save faile :' + bookname)
+    #     fileObject = open('faile.txt', 'w')
+    #     fileObject.write(bookname)
+    #     fileObject.close()
