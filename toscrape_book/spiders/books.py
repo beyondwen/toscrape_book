@@ -11,20 +11,30 @@ class BooksSpider(scrapy.Spider):
     start_urls = ['http://mebook.cc/']
 
     def parse(self, response):
-        for le in response.css('.content'):
-            url = le.xpath('./h2/a/@href').extract_first()
-            yield scrapy.Request(url, callback=self.pares_detail)
-        le = LinkExtractor(restrict_css='.current+a')
-        links = le.extract_links(response)
-        if links:
-            next_url = links[0].url
-            yield scrapy.Request(next_url, callback=self.parse)
+        try:
+            for le in response.css('.content'):
+                self.detail_url = le.xpath('./h2/a/@href').extract_first()
+                yield scrapy.Request(self.detail_url, callback=self.pares_detail)
+            le = LinkExtractor(restrict_css='.current+a')
+            links = le.extract_links(response)
+            if links:
+                self.next_url = links[0].url
+                yield scrapy.Request(self.next_url, callback=self.parse)
+        except Exception as e:
+            with open('shibaifileurl.txt', 'a') as f:
+                f.write(self.next_url)
+                f.write('\n')
 
     def pares_detail(self, response):
-        le = LinkExtractor(restrict_css='.downbtn')
-        links = le.extract_links(response)
-        url = links[0].url
-        yield scrapy.Request(url, callback=self.pares_downloadlink)
+        try:
+            le = LinkExtractor(restrict_css='.downbtn')
+            links = le.extract_links(response)
+            self.single_url = links[0].url
+            yield scrapy.Request(self.single_url, callback=self.pares_downloadlink)
+        except Exception as e:
+            with open('shibaifile.txt', 'a') as f:
+                f.write(self.single_url)
+                f.write('\n')
 
     def pares_downloadlink(self, response):
         book = BookItem()
@@ -40,4 +50,5 @@ class BooksSpider(scrapy.Spider):
         book['name'] = name[0].strip()
         book['url'] = url.strip()
         book['password'] = password2
+        book['save_state'] = '0'
         yield book

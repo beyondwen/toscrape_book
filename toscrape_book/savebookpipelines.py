@@ -24,7 +24,7 @@
 import MySQLdb
 
 
-class MySQLPipeline:
+class saveBookPipeline:
     def __init__(self):
         self.conn = MySQLdb.connect('127.0.0.1', 'root', 'wenhao151', 'scrapy_db', charset='utf8', use_unicode=True)
         self.cursor = self.conn.cursor()
