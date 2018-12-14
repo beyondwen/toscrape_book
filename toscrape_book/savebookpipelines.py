@@ -31,18 +31,12 @@ class saveBookPipeline:
 
     def process_item(self, item, spider):
         try:
-            select_sql = "select * from book where name = %s"
-            value = [item['name']]
-            self.cursor.execute(select_sql, value)
-            result = self.cursor.fetchone()
-            if result:
-                pass
-            else:
-                update_sql = """
-                             insert into  book (name,url,password,save_state) value (%s,%s,%s,%s,%s)
-                         """
-                self.cursor.execute(update_sql, (item['name'], item['url'], item['password'], item['save_state']))
-                self.conn.commit()
+            update_sql = """
+            insert into  book (name,url,password,save_state) value (%s,%s,%s,%s,%s)
+            """
+            self.cursor.execute(update_sql, (item['name'], item['url'], item['password'], item['save_state']))
+            self.conn.commit()
+
         except Exception as e:
             with open('shibaifilename.txt', 'a') as f:
                 f.write(item['name'])
