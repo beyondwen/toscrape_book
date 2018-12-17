@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
+import time
 from scrapy.linkextractors import LinkExtractor
-
 from ..items import BookItem
 
 
@@ -14,29 +14,34 @@ class BooksSpider(scrapy.Spider):
         try:
             for le in response.css('.content'):
                 self.detail_url = le.xpath('./h2/a/@href').extract_first()
+                bookName = le.xpath('./h2/a/@title').extract_first()
                 yield scrapy.Request(self.detail_url, callback=self.pares_detail)
             le = LinkExtractor(restrict_css='.current+a')
             links = le.extract_links(response)
             if links:
-                self.next_url = links[0].url
-                yield scrapy.Request(self.next_url, callback=self.parse)
+                next_url = links[0].url
+                time.sleep(10)
+                yield scrapy.Request(next_url, callback=self.parse)
         except Exception as e:
-            with open('shibaifileurl.txt', 'a') as f:
-                f.write(self.next_url)
+            with open('失败链接以及url.txt', 'a') as f:
+                f.write(next_url)
+                f.write(bookName)
                 f.write('\n')
 
     def pares_detail(self, response):
+        time.sleep(1)
         try:
             le = LinkExtractor(restrict_css='.downbtn')
             links = le.extract_links(response)
-            self.single_url = links[0].url
-            yield scrapy.Request(self.single_url, callback=self.pares_downloadlink)
+            single_url = links[0].url
+            yield scrapy.Request(single_url, callback=self.pares_downloadlink)
         except Exception as e:
-            with open('shibaifile.txt', 'a') as f:
-                f.write(self.single_url)
+            with open('失败链接以及url0.txt', 'a') as f:
+                f.write(single_url)
                 f.write('\n')
 
     def pares_downloadlink(self, response):
+        time.sleep(1)
         book = BookItem()
         le = LinkExtractor(restrict_css='.list')
         sel = response.css('.desc>p::text')

@@ -22,7 +22,7 @@
 # #             return item
 #
 import MySQLdb
-
+import time
 
 class MySQLPipeline:
     def __init__(self):
@@ -30,6 +30,7 @@ class MySQLPipeline:
         self.cursor = self.conn.cursor()
 
     def process_item(self, item, spider):
+        time.sleep(1)
         try:
             select_sql = "select * from book where name = %s"
             value = [item['name']]
@@ -39,12 +40,12 @@ class MySQLPipeline:
                 pass
             else:
                 update_sql = """
-                             insert into  book (name,url,password,save_state) value (%s,%s,%s,%s,%s)
+                             insert into  book (name,url,password,save_state) value (%s,%s,%s,%s)
                          """
-                self.cursor.execute(update_sql, (item['name'], item['url'], item['password'], item['save_state']))
+                self.cursor.execute(update_sql, ([item['name']], [item['url']], [item['password']], [item['save_state']]))
                 self.conn.commit()
         except Exception as e:
-            with open('shibaifilename.txt', 'a') as f:
+            with open('保存失败的文件.txt', 'a') as f:
                 f.write(item['name'])
                 f.write('\n')
 

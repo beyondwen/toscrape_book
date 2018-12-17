@@ -104,7 +104,6 @@ ROBOTSTXT_OBEY = True
 # 写入数据库时务必要开启此处
 ITEM_PIPELINES = {
     'toscrape_book.pipelines.MySQLPipeline': 265,
-    'toscrape_book.pipelines.saveBookPipeline': 346,
 }
 
 # # 伪装成常规浏览器
