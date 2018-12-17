@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2018-12-14 17:14:51
+Date: 2018-12-17 17:22:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,7 @@ CREATE TABLE `book` (
   `password` varchar(600) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '网盘密码',
   `save_state` int(2) unsigned zerofill DEFAULT '00' COMMENT '是否存盘(0未存盘/1已存盘)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=17394 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=17426 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of book
@@ -7925,3 +7925,35 @@ INSERT INTO `book` VALUES ('17390', '《科学哲学》刘大椿（作者）epub
 INSERT INTO `book` VALUES ('17391', '《不死神凰》写字板（作者）epub+mobi', 'https://pan.baidu.com/s/1UkSMATLTCfKGfNwMWi6OcQ', 'o5f7', '00');
 INSERT INTO `book` VALUES ('17392', '《旧时的盛宴》李叔同 等（作者）epub+azw3', 'https://pan.baidu.com/s/10wtz9TX2CPJw89aQ1QA9Rw', 'ypz0', '00');
 INSERT INTO `book` VALUES ('17393', '《昆仑2012新修版》凤歌（作者） epub+mobi', 'http://download.cloud.189.cn/v5/downloadFile.action?downloadRequest=1_269B037BB40E5DF0D24ACC7DB947FA17D447060CB6F959A37BCC5D814E37A7E4392C540844EDD7706A75A4204468539C87EC3949F50A52CA5E69C000E4802048633F430EC359916E2CA0904CEF02D10D1D533C9135FBFB7070DB0CE4FBE4214118BA041BD80A96341A38857F512CE33371E819DE63DE63ABC4BEC4CE87F314B8FD227141', '', '00');
+INSERT INTO `book` VALUES ('17394', '《天堂收音机》[日]伊藤正幸（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1vhnp33GgNu0MrmxlscLTrQ', 'lvn6', '00');
+INSERT INTO `book` VALUES ('17395', '《利文沃兹案》[美]安娜·凯瑟琳·格林（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/17-kglPWypF4SLavSKkrOiA', 'oojw', '00');
+INSERT INTO `book` VALUES ('17396', '《大王饶命（自制）》会说话的肘子（作者）epub+mobi', 'https://pan.baidu.com/s/12FKAncwRt7vVZ4Uu1wxqEg', 'r87f', '00');
+INSERT INTO `book` VALUES ('17397', '《被“废除不平等条约”遮蔽的北洋修约史（1912-1928）》唐启华（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1Thk-h5tkbTAoKrNUmsrBDQ', 'ov2i', '00');
+INSERT INTO `book` VALUES ('17398', '《《资本论》哲学的新解读》鲍金（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1yn2UCJubvfsRoR5azp7ThQ', 'd1ni', '00');
+INSERT INTO `book` VALUES ('17399', '《尤尔小屋的猫》[英]莉莉·海沃德（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1P5f0RESCiMfhUaRh2UHKSw', 'cl0t', '00');
+INSERT INTO `book` VALUES ('17400', '《天赋者》林洛（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1yKceEILpGKQ0UVAPYKW3SA', '8lwn', '00');
+INSERT INTO `book` VALUES ('17401', '《北洋军阀史话》丁中江（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/15BcAdwD8EWIgV-99N1QmPw', '7ozs', '00');
+INSERT INTO `book` VALUES ('17402', '《穿梭时间的女孩》[美]瑞萨·沃克（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1JRt15p_g15ius66q4gOJMg', 'yzp0', '00');
+INSERT INTO `book` VALUES ('17403', '《舞台生活四十年：梅兰芳回忆录》梅兰芳（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1pfNr21dl9BUfO1XUJaBBKQ', 'jnpo', '00');
+INSERT INTO `book` VALUES ('17404', '《血手印（第一季，套装共5册）》多特·哈奇森 等（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1ywnLsmU-nvzQSCPl6kw8Zw', 'i6kz', '00');
+INSERT INTO `book` VALUES ('17405', '《星形广场》[法]帕特里克·莫迪亚诺（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1apDSiXi_e8TdQkuuirG9JQ', '7dc2', '00');
+INSERT INTO `book` VALUES ('17406', '《穿越晚明之不朽帝国》博陵先生（作者）epub+mobi', 'https://pan.baidu.com/s/1WkAL_888AUhozY3c4xun9Q', 'wi09', '00');
+INSERT INTO `book` VALUES ('17407', '《猫（汉英双语版）》[英]T. S.艾略特（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/17PO7n9RDS2lJjjxx_KUc6A', '9s6s', '00');
+INSERT INTO `book` VALUES ('17408', '《宇宙：从起源到未来》[美]约翰·布罗克曼（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1sPuF5n4-HVCs6RunGb2K9g', 'zk0r', '00');
+INSERT INTO `book` VALUES ('17409', '《酥油》江觉迟（作者）epub+mobi', 'https://pan.baidu.com/s/1N94ROEzqFhft6CH8y7vzpg', '5k7g', '00');
+INSERT INTO `book` VALUES ('17410', '《中国社会风俗史》秦永洲（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1xqNxBNjTCNuLT6gZ6Kio_A', '3wwm', '00');
+INSERT INTO `book` VALUES ('17411', '《与福尔摩斯为邻》[美]劳丽·R.金（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1p4A4qJXHu6SYHwerpoWTqA', 'hrmp', '00');
+INSERT INTO `book` VALUES ('17412', '《无限轮回（自制）》陌白（作者）epub+mobi', 'https://pan.baidu.com/s/1Xj69h-LYyAoFxN5toSGSGw', 'sd62', '00');
+INSERT INTO `book` VALUES ('17413', '《心灵的年轮》朱建军（作者）epub+mobi', 'https://pan.baidu.com/s/1l7Gw8J8BKakuwA2GLsZbBg', 'iee7', '00');
+INSERT INTO `book` VALUES ('17414', '《越读者》郝明义（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1U5K7ifg40sGvysON4wFvkQ', 'gxz1', '00');
+INSERT INTO `book` VALUES ('17415', '《四朝代》[泰]克立·巴莫（作者）epub+mobi', 'https://pan.baidu.com/s/1gME7Mauuirs4FrOypaqWcw', 'wwvt', '00');
+INSERT INTO `book` VALUES ('17416', '《逍遥梦路》文抄公（作者）epub+mobi', 'https://pan.baidu.com/s/1CToq23qqVHN_MWzZTNPVLw', 'o2wa', '00');
+INSERT INTO `book` VALUES ('17417', '《梦三生·永劫之花》云狐不喜（作者）epub+mobi', 'https://pan.baidu.com/s/1rsKOp8UoZOBhtagGGR1ERA', '27vq', '00');
+INSERT INTO `book` VALUES ('17418', '《水泥花园》[英]伊恩·麦克尤恩（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1Se3KrvyVIkU8GfAHR_08Xw', 'u5yi', '00');
+INSERT INTO `book` VALUES ('17419', '《慢时光，私旅行》时尚旅游（编辑）epub+mobi+azw3', 'https://pan.baidu.com/s/1r1hPY_v_c2cLP_n35YZn2A', 'dd15', '00');
+INSERT INTO `book` VALUES ('17420', '《近代史新论》夏东元（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1WNypvm8O-Bq83jGXECTUjw', '7rs3', '00');
+INSERT INTO `book` VALUES ('17421', '《吃掉那只青蛙》[美]博恩·崔西（作者）epub+mobi', 'https://pan.baidu.com/s/1EIlj5B4JsNUsUd9Eg63tDw', 'dwq3', '00');
+INSERT INTO `book` VALUES ('17422', '《等一寸日光来倾城》林桑榆（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1Mzw-YrqJR8jJJWPFztcd7Q', 'f09z', '00');
+INSERT INTO `book` VALUES ('17423', '《绿野仙踪（精制精排）》[清]李百川（作者）epub+mobi', 'https://pan.baidu.com/s/1p9O2QyAt3efidRIgIODSdQ', '5eo0', '00');
+INSERT INTO `book` VALUES ('17424', '《云川记（自制）》安慕年（作者）epub+mobi', 'https://pan.baidu.com/s/1X1FkA-fapPm3deC0qSi-uw', '4umq', '00');
+INSERT INTO `book` VALUES ('17425', '《文雅的疯狂》[美]尼古拉斯·A. 巴斯贝恩（作者）epub+mobi+azw3', 'https://pan.baidu.com/s/1EsKowyGfLvqkuOnPCBQ_FA', 'ghrn', '00');
