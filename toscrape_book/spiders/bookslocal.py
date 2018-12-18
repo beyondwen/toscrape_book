@@ -10,23 +10,14 @@ class BooksSpider(scrapy.Spider):
     allowed_domains = ['localhost:8086', 'mebook.cc']
     start_urls = ['http://localhost:8086/list']
 
-    detailUrl_var = ''
-    dataId_var = ''
-    bookName_var = ''
-
     def parse(self, response):
         try:
             for pb in response.css('.booktr'):
                 detailUrl = pb.css('.du::text').extract()[0]
                 dataId = pb.css('.bookid::text').extract()[0]
                 bookName = pb.css('.bookName::text').extract()[0]
-                global detailUrl_var
-                global dataId_var
-                global bookName_var
-                detailUrl_var = detailUrl
-                dataId_var = dataId
-                bookName_var = bookName
-                yield scrapy.Request(detailUrl, callback=self.pares_detail)
+                item = {'itemA':detailUrl,'itemB':dataId,'itemC':bookName}
+                yield scrapy.Request(detailUrl, callback=self.pares_detail, meta={item})
             le = LinkExtractor(restrict_xpaths='//*[@id="pageno"]')
             links = le.extract_links(response)
             if links:
@@ -44,12 +35,12 @@ class BooksSpider(scrapy.Spider):
 
     def pares_detail(self, response):
         try:
-            global detailUrl_var
-            global dataId_var
-            global bookName_var
-            print(detailUrl_var)
-            print(dataId_var)
-            print(bookName_var)
+            itemA = response.meta['itemA']
+            itemB = response.meta['itemB']
+            itemC = response.meta['itemC']
+            print(itemA)
+            print(itemB)
+            print(itemC)
             le = LinkExtractor(restrict_css='.downbtn')
             links = le.extract_links(response)
             single_url = links[0].url
