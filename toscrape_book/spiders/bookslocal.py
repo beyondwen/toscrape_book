@@ -18,14 +18,14 @@ class BooksSpider(scrapy.Spider):
                 bookName = pb.css('.bookName::text').extract()[0]
                 item = {'itemA':detailUrl,'itemB':dataId,'itemC':bookName}
                 yield scrapy.Request(detailUrl, callback=self.pares_detail, meta=item)
-            le = LinkExtractor(restrict_xpaths='//*[@id="pageno"]')
+            le = LinkExtractor(restrict_css='.netxtPage')
             links = le.extract_links(response)
             if links:
                 next_url = links[0].url
-                yield scrapy.Request(next_url, callback=self.parse)
+                yield scrapy.Request(next_url, callback=self.parse, dont_filter=True)
         except Exception as e:
             print(e)
-            with open('失败链接.txt', 'a') as f:
+            with open('失败链接.txt', 'a',encoding="utf-8") as f:
                 f.write(detailUrl)
                 f.write('\n')
                 f.write(dataId)
@@ -44,11 +44,11 @@ class BooksSpider(scrapy.Spider):
             single_url = links[0].url
             yield scrapy.Request(single_url, callback=self.pares_downloadlink,meta=item)
         except Exception as e:
-            with open('失败链接0.txt', 'a') as f:
-                f.write(itemA)
-                f.write('\n')
-                f.write(itemB)
-                f.write('\n')
+            with open('失败链接0.txt', 'a' ,encoding="utf-8") as f:
+                # f.write(itemA)
+                # f.write('\n')
+                # f.write(itemB)
+                # f.write('\n')
                 f.write(itemC)
                 f.write('\n')
 

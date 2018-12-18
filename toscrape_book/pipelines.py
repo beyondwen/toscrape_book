@@ -57,7 +57,7 @@ class MySQLPipeline:
             self.cursor.execute(update_sql, (item['url'], item['password'], item['id']))
             self.conn.commit()
         except Exception as e:
-            with open('保存失败的文件.txt', 'a') as f:
+            with open('保存失败的文件.txt', 'a',encoding="utf-8") as f:
                 f.write(item['name'])
                 f.write('\n')
 
