@@ -16,7 +16,8 @@ class BooksSpider(scrapy.Spider):
                 detailUrl = pb.css('.du::text').extract()[0]
                 dataId = pb.css('.bookid::text').extract()[0]
                 bookName = pb.css('.bookName::text').extract()[0]
-                yield scrapy.Request(detailUrl, callback=self.pares_detail, meta={'itemA':detailUrl,'itemB':dataId,'itemC':bookName})
+                item = {'itemA':detailUrl,'itemB':dataId,'itemC':bookName}
+                yield scrapy.Request(detailUrl, callback=self.pares_detail, meta=item)
             le = LinkExtractor(restrict_xpaths='//*[@id="pageno"]')
             links = le.extract_links(response)
             if links:
@@ -37,23 +38,24 @@ class BooksSpider(scrapy.Spider):
             itemA = response.meta['itemA']
             itemB = response.meta['itemB']
             itemC = response.meta['itemC']
-            print(itemA)
-            print(itemB)
-            print(itemC)
+            item = {'itemA': itemA, 'itemB': itemB, 'itemC': itemC}
             le = LinkExtractor(restrict_css='.downbtn')
             links = le.extract_links(response)
             single_url = links[0].url
-            yield scrapy.Request(single_url, callback=self.pares_downloadlink)
+            yield scrapy.Request(single_url, callback=self.pares_downloadlink,meta=item)
         except Exception as e:
             with open('失败链接0.txt', 'a') as f:
-                f.write(BooksSpider.detailUrl_var)
+                f.write(itemA)
                 f.write('\n')
-                f.write(BooksSpider.dataId_var)
+                f.write(itemB)
                 f.write('\n')
-                f.write(BooksSpider.bookName_var)
+                f.write(itemC)
                 f.write('\n')
 
     def pares_downloadlink(self, response):
+        itemA = response.meta['itemA']
+        itemB = response.meta['itemB']
+        itemC = response.meta['itemC']
         time.sleep(1)
         book = BookItem()
         le = LinkExtractor(restrict_css='.list')
@@ -65,5 +67,5 @@ class BooksSpider(scrapy.Spider):
         password2 = password1[12:16]
         book['url'] = url.strip()
         book['password'] = password2
-        book['id'] = BooksSpider.dataId_var
+        book['id'] = itemB
         yield book
