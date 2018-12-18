@@ -16,8 +16,7 @@ class BooksSpider(scrapy.Spider):
                 detailUrl = pb.css('.du::text').extract()[0]
                 dataId = pb.css('.bookid::text').extract()[0]
                 bookName = pb.css('.bookName::text').extract()[0]
-                item = {'itemA':detailUrl,'itemB':dataId,'itemC':bookName}
-                yield scrapy.Request(detailUrl, callback=self.pares_detail, meta={item})
+                yield scrapy.Request(detailUrl, callback=self.pares_detail, meta={'itemA':detailUrl,'itemB':dataId,'itemC':bookName})
             le = LinkExtractor(restrict_xpaths='//*[@id="pageno"]')
             links = le.extract_links(response)
             if links:
