@@ -8,7 +8,7 @@ from ..items import BookItem
 class BooksSpider(scrapy.Spider):
     name = 'books'
     allowed_domains = ['mebook.cc']
-    start_urls = ['http://mebook.cc/']
+    start_urls = ['http://mebook.cc/page/211']
 
     def parse(self, response):
         try:

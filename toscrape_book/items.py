@@ -14,7 +14,7 @@ class BookItem(scrapy.Item):
     password = scrapy.Field()  # 书名
     save_state = scrapy.Field()  # 状态
     id = scrapy.Field()  # id
-    main_url = scrapy.Field()  # id
+    detail_url = scrapy.Field()  # id
     # price = scrapy.Field()  # 价格
     # review_rating = scrapy.Field()  # 评价等级，1～5 星
     # review_num = scrapy.Field()  # 评价数量

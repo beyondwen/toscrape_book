@@ -29,21 +29,33 @@ class MySQLPipeline:
         self.conn = MySQLdb.connect('127.0.0.1', 'root', 'wenhao151', 'scrapy_db', charset='utf8', use_unicode=True)
         self.cursor = self.conn.cursor()
 
+    # def process_item(self, item, spider):
+    #     try:
+    #         select_sql = "select * from book where name = %s"
+    #         value = [item['name']]
+    #         self.cursor.execute(select_sql, value)
+    #         result = self.cursor.fetchone()
+    #         if result:
+    #             pass
+    #         else:
+    #             update_sql = """
+    #                          insert into  book (name,detail_url) value (%s,%s)
+    #                      """
+    #             self.cursor.execute(update_sql, ([item['name']],[item['detail_url']]))
+    #             self.conn.commit()
+    #     except Exception as e:
+    #         with open('保存失败的文件.txt', 'a') as f:
+    #             f.write(item['name'])
+    #             f.write('\n')
+
+
     def process_item(self, item, spider):
-        time.sleep(1)
         try:
-            select_sql = "select * from book where name = %s"
-            value = [item['name']]
-            self.cursor.execute(select_sql, value)
-            result = self.cursor.fetchone()
-            if result:
-                pass
-            else:
-                update_sql = """
-                             insert into  book (name,url,password,save_state) value (%s,%s,%s,%s)
-                         """
-                self.cursor.execute(update_sql, ([item['name']], [item['url']], [item['password']], [item['save_state']]))
-                self.conn.commit()
+            update_sql = """
+                                         update book SET url = %s,password = %s  where id = %s
+                                     """
+            self.cursor.execute(update_sql, (item['url'], item['password'], item['id']))
+            self.conn.commit()
         except Exception as e:
             with open('保存失败的文件.txt', 'a') as f:
                 f.write(item['name'])
