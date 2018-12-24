@@ -14,6 +14,8 @@ BOT_NAME = 'toscrape_book'
 SPIDER_MODULES = ['toscrape_book.spiders']
 NEWSPIDER_MODULE = 'toscrape_book.spiders'
 
+COMMANDS_MODULE = 'toscrape_book.commands'
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'toscrape_book (+http://www.yourdomain.com)'
 

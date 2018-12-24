@@ -8,7 +8,7 @@ from ..items import BookItem
 class BooksSpider(scrapy.Spider):
     name = 'bookslocal'
     allowed_domains = ['localhost:8086', 'mebook.cc']
-    start_urls = ['http://localhost:8086/list']
+    start_urls = ['http://localhost:8086/typelist']
 
     def parse(self, response):
         try:
@@ -45,10 +45,6 @@ class BooksSpider(scrapy.Spider):
             yield scrapy.Request(single_url, callback=self.pares_downloadlink,meta=item)
         except Exception as e:
             with open('失败链接0.txt', 'a' ,encoding="utf-8") as f:
-                # f.write(itemA)
-                # f.write('\n')
-                # f.write(itemB)
-                # f.write('\n')
                 f.write(itemC)
                 f.write('\n')
 
@@ -68,4 +64,5 @@ class BooksSpider(scrapy.Spider):
         book['url'] = url.strip()
         book['password'] = password2
         book['id'] = itemB
+        book['savestate'] = '0'
         yield book

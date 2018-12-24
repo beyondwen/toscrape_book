@@ -10,8 +10,8 @@ from scrapy.linkextractors import LinkExtractor
 from selenium.webdriver.chrome.options import Options
 
 
-class BooksSpider(scrapy.Spider):
-    name = 'saveBook'
+class BooksSpider1 (scrapy.Spider):
+    name = 'saveBook1'
     allowed_domains = ['localhost:8086']
     start_urls = ['http://localhost:8086/typelist']
 
@@ -115,11 +115,11 @@ class BooksSpider(scrapy.Spider):
                 book['id'] = bookId
             except:
                 book['id'] = bookId
-                book['savestate'] = 4
+                book['savestate'] = 3
             self.browser.close()
             self.browser.quit()
             yield book
-        le = LinkExtractor(restrict_css='#shouye')
+        le = LinkExtractor(restrict_css='#zhongye')
         links = le.extract_links(response)
         if links:
             next_url = links[0].url
@@ -142,6 +142,5 @@ class BooksSpider(scrapy.Spider):
                 '//*[@data-button-id="b35"]').click()
             time.sleep(3)
         except:
-            self.browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath(
-                '//*[@data-button-id="b15"]').click()
+            self.browser.find_element(By.CLASS_NAME, "g-button-blue-large").click()
             time.sleep(3)

@@ -10,8 +10,8 @@ from scrapy.linkextractors import LinkExtractor
 from selenium.webdriver.chrome.options import Options
 
 
-class BooksSpider(scrapy.Spider):
-    name = 'saveBook'
+class BooksSpider2 (scrapy.Spider):
+    name = 'saveBook2'
     allowed_domains = ['localhost:8086']
     start_urls = ['http://localhost:8086/typelist']
 
@@ -119,7 +119,7 @@ class BooksSpider(scrapy.Spider):
             self.browser.close()
             self.browser.quit()
             yield book
-        le = LinkExtractor(restrict_css='#shouye')
+        le = LinkExtractor(restrict_css='#weiye')
         links = le.extract_links(response)
         if links:
             next_url = links[0].url
