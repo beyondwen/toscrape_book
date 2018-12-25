@@ -8,6 +8,6 @@ from toscrape_book.spiders.saveBook2 import BooksSpider2
 process = CrawlerProcess(get_project_settings())
 process.crawl(BooksSpider)
 # process.crawl(BooksSpider1)
-process.crawl(BooksSpider2)
+# process.crawl(BooksSpider2)
 
 process.start()

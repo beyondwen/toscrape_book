@@ -38,7 +38,7 @@ class BooksSpider(scrapy.Spider):
             bookname1 = le.css('.bookName::text')
 
             chrome_options = Options()
-            chrome_options.add_argument('headless')
+            # chrome_options.add_argument('headless')
             # chrome_options.add_argument("window-size=1920,1080")
             chrome_options.add_argument('--start-maximized')
             chrome_options.add_argument('log-level=3')
@@ -105,7 +105,7 @@ class BooksSpider(scrapy.Spider):
                 # 保存到网盘
                 self.clickSave()
                 # 选取保存位置
-                self.browser.find_element_by_xpath('//*[@node-path="/wdxsw1"]').click()
+                self.browser.find_element_by_xpath('//*[@node-path="/wdxsw3"]').click()
                 time.sleep(3)
                 self.finalSave()
                 book['name'] = bookname
@@ -113,7 +113,8 @@ class BooksSpider(scrapy.Spider):
                 book['password'] = pwd
                 book['savestate'] = 1
                 book['id'] = bookId
-            except:
+            except Exception as e:
+                print(e)
                 book['id'] = bookId
                 book['savestate'] = 4
             self.browser.close()
@@ -138,10 +139,8 @@ class BooksSpider(scrapy.Spider):
 
     def finalSave(self):
         try:
-            self.browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath(
-                '//*[@data-button-id="b35"]').click()
+            self.browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath('//*[@data-button-id="b35"]').click()
             time.sleep(3)
         except:
-            self.browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath(
-                '//*[@data-button-id="b15"]').click()
+            self.browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath('//a[@title="确定"]').click()
             time.sleep(3)
