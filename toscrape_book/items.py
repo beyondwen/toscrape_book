@@ -16,8 +16,4 @@ class BookItem(scrapy.Item):
     id = scrapy.Field()  # id
     detailurl = scrapy.Field()  # id
     type = scrapy.Field()  # id
-    # price = scrapy.Field()  # 价格
-    # review_rating = scrapy.Field()  # 评价等级，1～5 星
-    # review_num = scrapy.Field()  # 评价数量
-    # upc = scrapy.Field()  # 产品编码
-    # stock = scrapy.Field()  # 库存量
+
