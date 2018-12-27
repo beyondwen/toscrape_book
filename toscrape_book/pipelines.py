@@ -13,7 +13,7 @@ class MySQLPipeline:
             update_sql = """
                                          update book_type SET b_url = %s,b_password = %s  where id = %s
                                      """
-            self.cursor.execute(update_sql, (item['url'], item['password'], item['id']))
+            self.cursor.execute(update_sql, (item['url'], item['password'],item['savestate'], item['id']))
             self.conn.commit()
         except Exception as e:
             with open('保存失败的文件.txt', 'a',encoding="utf-8") as f:
