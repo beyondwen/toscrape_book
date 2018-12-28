@@ -11,7 +11,7 @@ class MySQLPipeline:
     def process_item(self, item, spider):
         try:
             update_sql = """
-                                         update book_type SET b_url = %s,b_password = %s  where id = %s
+                                         update book_type SET b_url = %s,b_password = %s ,b_save_state = %s where id = %s
                                      """
             self.cursor.execute(update_sql, (item['url'], item['password'],item['savestate'], item['id']))
             self.conn.commit()
