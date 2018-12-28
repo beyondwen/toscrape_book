@@ -105,7 +105,7 @@ class BooksSpider1 (scrapy.Spider):
                 # 保存到网盘
                 self.clickSave()
                 # 选取保存位置
-                self.browser.find_element_by_xpath('//*[@node-path="/wdxsw1"]').click()
+                self.browser.find_element_by_xpath('//*[@node-path="/wdxsw9"]').click()
                 time.sleep(3)
                 self.finalSave()
                 book['name'] = bookname
@@ -115,7 +115,7 @@ class BooksSpider1 (scrapy.Spider):
                 book['id'] = bookId
             except:
                 book['id'] = bookId
-                book['savestate'] = 3
+                book['savestate'] = 4
             self.browser.close()
             self.browser.quit()
             yield book
@@ -142,5 +142,5 @@ class BooksSpider1 (scrapy.Spider):
                 '//*[@data-button-id="b35"]').click()
             time.sleep(3)
         except:
-            self.browser.find_element(By.CLASS_NAME, "g-button-blue-large").click()
+            self.browser.find_element(By.CLASS_NAME, "dialog-footer").find_element_by_xpath('//a[@title="确定"]').click()
             time.sleep(3)
