@@ -38,7 +38,7 @@ class BooksSpider(scrapy.Spider):
             bookname1 = le.css('.bookName::text')
 
             chrome_options = Options()
-            # chrome_options.add_argument('headless')
+            chrome_options.add_argument('headless')
             # chrome_options.add_argument("window-size=1920,1080")
             chrome_options.add_argument('--start-maximized')
             chrome_options.add_argument('log-level=3')
