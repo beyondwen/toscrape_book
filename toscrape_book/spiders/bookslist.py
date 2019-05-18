@@ -8,7 +8,7 @@ from ..items import BookItem
 class BooksSpider(scrapy.Spider):
     name = 'bookslist'
     allowed_domains = ['mebook.cc']
-    start_urls = ['http://mebook.cc/date/2018/02']
+    start_urls = ['http://mebook.cc/date/2019/02']
 
     def parse(self, response):
         for le in response.css('.content'):
@@ -18,7 +18,7 @@ class BooksSpider(scrapy.Spider):
             print(bookName)
             book['detailurl'] = detailurl
             book['name'] = bookName
-            book['type'] = '201802'
+            book['type'] = '201902'
             yield book
         le = LinkExtractor(restrict_css='.current+a')
         links = le.extract_links(response)
