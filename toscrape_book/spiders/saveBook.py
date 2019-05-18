@@ -19,7 +19,7 @@ class BooksSpider(scrapy.Spider):
 
     def parse(self, response):
         try:
-            f = open('D:\\githome\\toscrape_book\\jsonFile.json', 'r')
+            f = open('D:\\workspace\\toscrape_book\\jsonFile.json', 'r')
             cookiessu = f.read()
             cookiessu = json.loads(cookiessu)
         except:
@@ -38,6 +38,7 @@ class BooksSpider(scrapy.Spider):
             bookname1 = le.css('.bookName::text')
 
             chrome_options = Options()
+
             chrome_options.add_argument('headless')
             # chrome_options.add_argument("window-size=1920,1080")
             chrome_options.add_argument('--start-maximized')
@@ -77,8 +78,8 @@ class BooksSpider(scrapy.Spider):
                 submit_button.click()
                 time.sleep(2)
                 # # 你的百度去帐号，保存到你的网盘肯定需要你自己的帐号密码
-                # user_name = ''
-                # password = ''
+                # user_name = 'beyond文豪'
+                # password = 'wenhao176'
                 # # 登陆自己的百度云
                 # self.browser.find_element(By.CLASS_NAME, "CDaavKb").find_element_by_xpath(
                 #     '//*[@node-type="header-login-btn"]').click()
@@ -105,7 +106,7 @@ class BooksSpider(scrapy.Spider):
                 # 保存到网盘
                 self.clickSave()
                 # 选取保存位置
-                self.browser.find_element_by_xpath('//*[@node-path="/wdxsw9"]').click()
+                self.browser.find_element_by_xpath('//*[@node-path="/wdxsw1901"]').click()
                 time.sleep(3)
                 self.finalSave()
                 book['name'] = bookname

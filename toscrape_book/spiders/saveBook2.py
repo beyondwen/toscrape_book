@@ -19,7 +19,7 @@ class BooksSpider2 (scrapy.Spider):
 
     def parse(self, response):
         try:
-            f = open('D:\\githome\\toscrape_book\\jsonFile.json', 'r')
+            f = open('D:\\workspace\\toscrape_book\\jsonFile.json', 'r')
             cookiessu = f.read()
             cookiessu = json.loads(cookiessu)
         except:
@@ -105,7 +105,7 @@ class BooksSpider2 (scrapy.Spider):
                 # 保存到网盘
                 self.clickSave()
                 # 选取保存位置
-                self.browser.find_element_by_xpath('//*[@node-path="/wdxsw9"]').click()
+                self.browser.find_element_by_xpath('//*[@node-path="/wdxsw1901"]').click()
                 time.sleep(3)
                 self.finalSave()
                 book['name'] = bookname
