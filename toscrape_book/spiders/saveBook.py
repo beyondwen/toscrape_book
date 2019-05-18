@@ -106,7 +106,7 @@ class BooksSpider(scrapy.Spider):
                 # 保存到网盘
                 self.clickSave()
                 # 选取保存位置
-                self.browser.find_element_by_xpath('//*[@node-path="/wdxsw1901"]').click()
+                self.browser.find_element_by_xpath('//*[@node-path="/wdxsw1902"]').click()
                 time.sleep(3)
                 self.finalSave()
                 book['name'] = bookname
